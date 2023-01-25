@@ -26,7 +26,7 @@ class UpdateEmployerRequest extends FormRequest
     {
         // módosítva
         return [
-            // 'id' => ['required', 'min:1'],
+            'id' => ['required', 'min:1'],
             'name' => ['required', 'string', 'min:1', 'max:255'],
             'address' => ['required', 'string', 'min:1', 'max:255'],
             'telephone' => ['required', 'string', 'min:10', 'max:255'],

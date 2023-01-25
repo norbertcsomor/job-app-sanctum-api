@@ -18,11 +18,11 @@ class JobapplicationController extends Controller
      */
     public function index()
     {
-        $jobadvertisements = DB::table('jobadvertisements')
+        $jobapplications = DB::table('jobadvertisements')
             ->leftJoin('jobapplications', 'jobadvertisements.id', '=', 'jobapplications.jobadvertisement_id')
             ->leftJoin('jobseekers', 'jobseekers.id', '=', 'jobapplications.user_id')
             ->orderBy('created_at', 'desc')->get();
-        return $jobadvertisements;
+        return $jobapplications;
     }
 
     /**
@@ -37,7 +37,7 @@ class JobapplicationController extends Controller
         $jobapplication->user_id = $request->input('user_id');
         $jobapplication->jobadvertisement_id = $request->input('jobadvertisement_id');
         $jobapplication->cv_id = $request->input('cv_id');
-        $jobapplication->status = $request->input('status');
+        $jobapplication->status = "Nincs megnézve";
 
         $success = $jobapplication->save();
 

@@ -4,9 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Jobadvertisement;
 use App\Models\Jobapplication;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Sanctum\Sanctum;
 use App\Models\Cv;
 use Tests\TestCase;
 
@@ -22,7 +20,6 @@ class JobapplicationTest extends TestCase
             'user_id' => $jobseeker,
             'jobadvertisement_id' => Jobadvertisement::factory()->create()->id,
             'cv_id' => Cv::factory()->create()->id,
-            'status' => 'Nincs megnézve.'
         ]);
 
         $response = $this->post(route('jobapplications.store'), $jobapplication->toArray());
@@ -31,7 +28,7 @@ class JobapplicationTest extends TestCase
             'message' => 'Sikerült a jelentkezés létrehozása!'
         ]);
         $this->assertCount(1, Jobapplication::all());
-        $this->assertDatabaseHas('jobapplications', ['status' => $jobapplication->status]);
+        $this->assertDatabaseHas('jobapplications', ['status' => "Nincs megnézve"]);
     }
     /** @test */
     public function all_fields_of_a_jobapplication_are_required()
@@ -46,9 +43,6 @@ class JobapplicationTest extends TestCase
 
         $response3 = $this->post(route('jobapplications.store'), ['cv_id' => '']);
         $response3->assertSessionHasErrors('cv_id');
-
-        $response4 = $this->post(route('jobapplications.store'), ['status' => '']);
-        $response4->assertSessionHasErrors('status');
     }
     /** @test */
     public function a_jobapplication_can_be_deleted_by_an_authenticated_user()

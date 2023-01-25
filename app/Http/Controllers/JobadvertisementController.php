@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateJobadvertisementRequest;
 use App\Http\Resources\JobadvertisementResource;
 use App\Models\Jobadvertisement;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use App\Models\Jobapplication;
 
 class JobadvertisementController extends Controller
 {
@@ -108,5 +110,17 @@ class JobadvertisementController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR)
                 ->header('Content-Type', 'application/json');
         }
+    }
+
+    /** 
+     * Az álláshirdetés összes jelentkezésének lekérdezése az adatbázisból.
+     * 
+     * @param \App\Models\Jobadvertisement $jobadvertisement az álláshirdetés adatai.
+     * @return \Illuminate\Http\Response a szerver válasza.
+     */
+    public function jobapplications($jobadvertisement)
+    {
+		$jobapplications = Jobapplication::with(['cv', 'jobadvertisement', 'user'])->where('jobadvertisement_id', $jobadvertisement)->get()->toArray();
+        return $jobapplications;
     }
 }

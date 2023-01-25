@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class JobseekerResource extends JsonResource
 {
+	public static $wrap = null;
     /**
      * Transform the resource into an array.
      *
@@ -15,6 +16,7 @@ class JobseekerResource extends JsonResource
     public function toArray($request)
     {
         return [
+			'id' => $this->id,
             'name' => $this->name,
             'address' => $this->address,
             'telephone' => $this->telephone,

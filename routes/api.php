@@ -75,6 +75,9 @@ Route::group(['middleware' => ['auth:sanctum', 'cors']], function () {
     // Létező álláshirdetés törlése az adatbázisból.
     Route::delete('/jobadvertisements/{jobadvertisement}', [JobadvertisementController::class, 'destroy'])
         ->name('jobadvertisements.destroy');
+    // Az álláshirdetés összes jelentkezésének lekérdezése.
+    Route::get('/jobadvertisementJobapplications/{jobadvertisement}', [JobadvertisementController::class, 'jobapplications'])
+        ->name('jobadvertisements.jobapplications');
 });
 /*
 |------------------------|

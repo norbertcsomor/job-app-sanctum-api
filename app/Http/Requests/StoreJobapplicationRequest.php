@@ -29,7 +29,7 @@ class StoreJobapplicationRequest extends FormRequest
             'user_id' => ['required', 'min:1'],
             'jobadvertisement_id' => ['required', 'min:1'],
             'cv_id' => ['required', 'min:1'],
-            'status' => ['required', 'min:1'],
+            // 'status' => ['required', 'min:1'],
         ];
     }
 }

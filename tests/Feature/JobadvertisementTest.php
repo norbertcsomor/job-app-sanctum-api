@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Sanctum\Sanctum;
 use App\Models\Jobadvertisement;
-use App\Models\User;
 use Tests\TestCase;
 
 class JobadvertisementTest extends TestCase
@@ -97,9 +95,21 @@ class JobadvertisementTest extends TestCase
     {
         $employer = $this->createAuthenticatedUser(['role' => 'employer']);
         $jobadvertisement = Jobadvertisement::factory()->create(['user_id' => $employer]);
-        
+
         $response = $this->getJson(route('jobadvertisements.show', $jobadvertisement->id));
         $response->assertOk();
-        $this->assertEquals($response['data']['title'], $jobadvertisement->title);
+        $this->assertEquals($response['title'], $jobadvertisement->title);
+    }
+    /** @test */
+    public function an_authenticated_employer_can_get_the_jobapplications_created_by_the_jobseekers_for_a_jobadvertisement()
+    {
+        $this->withoutExceptionHandling();
+        $jobseeker = $this->createAuthenticatedUser(['role' => 'jobseeker']);
+        $jobadvertisement = $this->createJobadvertisement();
+        $jobapplication = $this->createJobapplication(['user_id' => $jobseeker, 'jobadvertisement_id' => $jobadvertisement]);
+
+        $response = $this->getJson(route('jobadvertisements.jobapplications', $jobadvertisement));
+        $response->assertOk();
+        $this->assertEquals($response[0]['status'], $jobapplication->status);
     }
 }

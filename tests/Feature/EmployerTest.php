@@ -57,6 +57,7 @@ class EmployerTest extends TestCase
         $employer = $this->createAuthenticatedUser(['role' => 'employer']);
 
         $response = $this->put(route('employers.update', $employer->id), [
+            'id' => $employer->id,
             'name' => 'Új Munkaadó',
             'address' => 'Cím',
             'telephone' => '+36-00-123-456',
@@ -96,7 +97,7 @@ class EmployerTest extends TestCase
 
         $response = $this->getJson(route('employers.show', $employer));
         $response->assertOk();
-        $this->assertEquals($response['data']['email'], $employer->email);
+        $this->assertEquals($response['email'], $employer->email);
     }
     /** @test */
     public function an_authenticated_employer_can_get_the_jobadvertisements_created_by_the_employer()

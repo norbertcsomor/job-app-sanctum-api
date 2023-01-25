@@ -2,14 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Models\Admin;
-use App\Models\Cv;
-use App\Models\Jobadvertisement;
-use App\Models\Jobapplication;
-use App\Models\Jobseeker;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class JobseekerTest extends TestCase
@@ -102,7 +96,7 @@ class JobseekerTest extends TestCase
 
         $response = $this->getJson(route('jobseekers.show', $jobseeker));
         $response->assertOk();
-        $this->assertEquals($response['data']['email'], $jobseeker->email);
+        $this->assertEquals($response['email'], $jobseeker->email);
     }
 
     /** @test */
